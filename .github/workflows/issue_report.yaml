@@ -1,5 +1,10 @@
 name: Calc Result to Issue
 
+env:
+  # GitHub 런너에서 Node.js 20 비권장 경고를 피하려고,
+  # workflow에서 Node.js 24를 강제로 사용하도록 옵트인합니다.
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
+
 on:
   push:
     branches: ["main"]
@@ -8,20 +13,16 @@ on:
 jobs:
   run-and-report:
     runs-on: ubuntu-latest
-    env:
-      # GitHub Actions 런너에서 Node.js 20 비권장 경고가 뜨지 않도록,
-      # 현재부터 Node.js 24로 액션을 실행하도록 옵트인합니다.
-      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
     # 이슈 작성을 위해 쓰기 권한이 필요합니다
     permissions:
       issues: write
 
     steps:
       - name: 코드 체크아웃
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Python 설치
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
           python-version: "3.10"
 
@@ -34,7 +35,7 @@ jobs:
           cat output.md
 
       - name: 결과를 이슈로 등록
-        uses: peter-evans/create-issue-from-file@v5
+        uses: peter-evans/create-issue-from-file@v6
         with:
           title: "🚀 사칙연산 자동 실행 결과"
           content-filepath: ./output.md
