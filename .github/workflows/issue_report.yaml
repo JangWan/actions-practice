@@ -8,6 +8,10 @@ on:
 jobs:
   run-and-report:
     runs-on: ubuntu-latest
+    env:
+      # GitHub Actions 런너에서 Node.js 20 비권장 경고가 뜨지 않도록,
+      # 현재부터 Node.js 24로 액션을 실행하도록 옵트인합니다.
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
     # 이슈 작성을 위해 쓰기 권한이 필요합니다
     permissions:
       issues: write
